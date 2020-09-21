@@ -14,9 +14,12 @@ linters:
     - dupl
     - goconst
     - lll
+run:
+  timeout: 3m
 linters-settings:
   errcheck:
     check-type-assertions: true
+    check-blank: true
   lll:
     line-length: 250
   dupl:
