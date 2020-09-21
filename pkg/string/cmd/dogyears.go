@@ -42,7 +42,10 @@ func DogYearCmd(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	a = strings.TrimSpace(a)
-	age, _ := strconv.Atoi(a)
+	age, err := strconv.Atoi(a)
+	if err != nil {
+		return err
+	}
 	dogyears := age * 7
 
 	fmt.Printf("your age of %d is %v in dog years\n", age, dogyears)

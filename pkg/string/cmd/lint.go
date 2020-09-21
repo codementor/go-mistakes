@@ -19,7 +19,7 @@ func newLintCmd() *cobra.Command {
 		Use:     "lint",
 		Short:   "Linting exercise",
 		Example: lintExample,
-		RunE: lintTest,
+		RunE:    lintTest,
 	}
 
 	return cmd
@@ -39,21 +39,14 @@ func (t T) String() string {
 	return fmt.Sprintf("%s.%s", t.Field1, t.Field2)
 }
 
-func check(test bool) bool {
-	if test {
-		return true
-	} else {
-		return false
-	}
+func Check(test string) bool {
+	return test == ""
 }
 
 func lintTest(cmd *cobra.Command, args []string) error {
 
 	var x T
-	y := T2{
-		Field1: x.Field1,
-		Field2: x.Field2,
-	}
+	y := T2(x)
 
 	fmt.Println(y)
 
@@ -61,24 +54,22 @@ func lintTest(cmd *cobra.Command, args []string) error {
 	strs := []string{"kind: Namespace", "kind:Namespace", "kind: Foo", "kind", "kind:  Namespace", "kind: Namespace"}
 	newStrs := []string{}
 
-	if strs != nil && len(strs) != 0 {
+	if len(strs) != 0 {
 		fmt.Println("strs is not empty")
 	}
 
-	for _, str := range strs {
-		newStrs = append(newStrs, str)
-	}
+	newStrs = append(newStrs, strs...)
 
-	nsRegex := regexp.MustCompile("kind:\\s*Namespace")
+	nsRegex := regexp.MustCompile(`kind:\s*Namespace`)
 	set := make(map[string]bool)
 
 	for _, str := range newStrs {
-		if (nsRegex.MatchString(str)) {
+		if nsRegex.MatchString(str) {
 			fmt.Println(str)
 		}
 	}
 
-	for key, _ := range set {
+	for key := range set {
 		fmt.Println(key)
 	}
 
