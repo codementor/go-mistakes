@@ -3,6 +3,9 @@
 test:
 	go test ./pkg/... 
 
+integration-test:
+	go test -tags integration ./pkg/...
+
 .PHONY: lint
 lint:
 	golangci-lint run

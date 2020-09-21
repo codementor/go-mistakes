@@ -40,7 +40,7 @@ func (t T) String() string {
 }
 
 func Check(test string) bool {
-	return test == ""
+	return test != ""
 }
 
 func lintTest(cmd *cobra.Command, args []string) error {
